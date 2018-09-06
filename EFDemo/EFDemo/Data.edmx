@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DataModelStoreContainer">
+          <EntitySet Name="Blog" EntityType="DataModel.Store.Blog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Company" EntityType="DataModel.Store.Company" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Location" EntityType="DataModel.Store.Location" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tag" EntityType="DataModel.Store.Tag" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_dbo_Blog_dbo_Tag_Tag_Id" Association="DataModel.Store.FK_dbo_Blog_dbo_Tag_Tag_Id">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Tag_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Logo" Type="nvarchar(max)" />
+          <Property Name="SystemCnName" Type="nvarchar(max)" />
+          <Property Name="SystemEnName" Type="nvarchar(max)" />
+          <Property Name="Color" Type="nvarchar(max)" />
+          <Property Name="Banner" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="AddTime" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="PushOffline" Type="bit" Nullable="false" />
+          <Property Name="SMSAllow" Type="bit" Nullable="false" />
+          <Property Name="MemberId" Type="int" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="State" Type="tinyint" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="AddTime" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <Association Name="FK_dbo_Blog_dbo_Tag_Tag_Id">
+          <End Role="Tag" Type="DataModel.Store.Tag" Multiplicity="0..1" />
+          <End Role="Blog" Type="DataModel.Store.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="Tag_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Blog" EntityType="DataModel.Blog" />
+          <EntitySet Name="Company" EntityType="DataModel.Company" />
+          <EntitySet Name="Location" EntityType="DataModel.Location" />
+          <EntitySet Name="Tag" EntityType="DataModel.Tag" />
+          <AssociationSet Name="FK_dbo_Blog_dbo_Tag_Tag_Id" Association="DataModel.FK_dbo_Blog_dbo_Tag_Tag_Id">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Tag_Id" Type="Int32" />
+          <NavigationProperty Name="Tag" Relationship="DataModel.FK_dbo_Blog_dbo_Tag_Tag_Id" FromRole="Blog" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Logo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SystemCnName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SystemEnName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Color" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Banner" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="PushOffline" Type="Boolean" Nullable="false" />
+          <Property Name="SMSAllow" Type="Boolean" Nullable="false" />
+          <Property Name="MemberId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="AddTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Mobile" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Blog" Relationship="DataModel.FK_dbo_Blog_dbo_Tag_Tag_Id" FromRole="Tag" ToRole="Blog" />
+        </EntityType>
+        <Association Name="FK_dbo_Blog_dbo_Tag_Tag_Id">
+          <End Role="Tag" Type="DataModel.Tag" Multiplicity="0..1" />
+          <End Role="Blog" Type="DataModel.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="Tag_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="DataEntities">
+          <EntitySetMapping Name="Blog">
+            <EntityTypeMapping TypeName="DataModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Tag_Id" ColumnName="Tag_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="DataModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="SystemCnName" ColumnName="SystemCnName" />
+                <ScalarProperty Name="SystemEnName" ColumnName="SystemEnName" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Banner" ColumnName="Banner" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="PushOffline" ColumnName="PushOffline" />
+                <ScalarProperty Name="SMSAllow" ColumnName="SMSAllow" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="DataModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tag">
+            <EntityTypeMapping TypeName="DataModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
